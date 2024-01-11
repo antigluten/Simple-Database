@@ -158,7 +158,7 @@ PrepareResult prepare_statement(InputBuffer *input_buffer, Statement *statement)
     }
 
     if (strncmp(input_buffer->buffer, "select", 6) == 0) {
-        statement->type = STATEMENT_INSERT;
+        statement->type = STATEMENT_SELECT;
         return PREPARE_SUCCESS;
     }
 
@@ -228,8 +228,10 @@ int main(int argc, char* argv[]) {
         switch (execute_statement(&statement, table)) {
             case (EXECUTE_SUCCESS):
                 printf("Executed.\n");
+                break;
             case (EXECUTE_TABLE_FULL):
-            printf("Error: Table full.\n");
+                printf("Error: Table is full.\n");
+                break;
         }
     }
 }
